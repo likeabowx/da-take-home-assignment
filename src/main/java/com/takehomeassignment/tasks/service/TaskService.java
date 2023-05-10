@@ -13,6 +13,9 @@ public class TaskService {
     TaskRepository taskRepository;
 
     public Task createTask(Task t) {
+        if (t.getCompleted() == null) {
+            t.setCompleted(false);
+        }
         return taskRepository.save(t);
     }
 
@@ -27,14 +30,25 @@ public class TaskService {
     public Task updateTask(Long taskId, Task updatedTask) {
         Task existingTask = taskRepository.findById(taskId).get();
 
-        existingTask.setTitle(updatedTask.getTitle());
-        existingTask.setDescription(updatedTask.getDescription());
-        existingTask.setCompleted(updatedTask.getCompleted());
+        if (updatedTask.getTitle() != null) {
+            existingTask.setTitle(updatedTask.getTitle());
+        }
+        if (updatedTask.getDescription() != null) {
+            existingTask.setDescription(updatedTask.getDescription());
+        }
+        if (updatedTask.getCompleted() != null) {
+            existingTask.setCompleted(updatedTask.getCompleted());
+        }
 
         return taskRepository.save(existingTask);
     }
 
     public void deleteTask(Long taskId) {
         taskRepository.deleteById(taskId);
+    }
+
+    // check if task exists
+    public boolean isExistingTask(Long taskId) {
+        return taskRepository.existsById(taskId);
     }
 }

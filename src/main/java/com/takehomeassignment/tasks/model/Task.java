@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.springframework.beans.factory.annotation.Value;
 
 @Entity
 @Table(name = "tasks")
@@ -15,13 +16,14 @@ public class Task {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "completed")
+    @Value("${:false}")
     private Boolean completed;
 
     public Long getId() {
