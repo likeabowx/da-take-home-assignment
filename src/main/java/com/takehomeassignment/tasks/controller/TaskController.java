@@ -23,8 +23,8 @@ public class TaskController {
 
     @RequestMapping(value="/tasks", method=RequestMethod.POST)
     public Task createTask(@RequestBody Task t) {
-        if (t.getTitle().isBlank()) {
-            throw new BadInputException("Title is required");
+        if (t.getTitle() == null || t.getTitle().isBlank()) {
+            throw new BadInputException("Non-empty title is required");
         }
 
         return taskService.createTask(t);
@@ -50,7 +50,7 @@ public class TaskController {
             throw new NoSuchElementFoundException("Task ID " + id + " does not exist");
         }
 
-        if (updatedTask.getTitle() != null && updatedTask.getTitle().isEmpty()) {
+        if (updatedTask.getTitle() != null && updatedTask.getTitle().isBlank()) {
             throw new BadInputException("Title cannot be empty");
         }
 
