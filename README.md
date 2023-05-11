@@ -36,7 +36,7 @@ username: user
 password: password
 
 // Admin Role
-username: user
+username: admin
 password: password
 ```
 
